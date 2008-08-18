@@ -1,13 +1,12 @@
-class Vector < ActiveRecord::Base
+class User < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
-  validates_presence_of :permalink
+  validates_presence_of :email
   
-  belongs_to :user
-  belongs_to :license
+  has_many :vectors
   has_many :comments
-  has_many :ratings
-  has_and_belongs_to_many :categories
+  
+  attr_accessible :name, :email, :url, :bio
   
   def before_validation
 

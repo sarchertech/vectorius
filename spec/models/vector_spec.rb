@@ -40,6 +40,26 @@ describe Vector do
     @vector.permalink.should == (@vector.name.downcase.gsub(/[^[:alnum:]]/,'-')).gsub(/-{2,}/,'-')
   end
   
+  it "should belong to user" do
+    lambda { @vector.user }.should_not raise_error(NoMethodError)
+  end
+  
+  it "should belong to license" do
+    lambda { @vector.license }.should_not raise_error(NoMethodError)
+  end
+  
+  it "should have comments" do
+    lambda { @vector.comments }.should_not raise_error(NoMethodError)
+  end
+  
+  it "should have ratings" do
+    lambda { @vector.ratings }.should_not raise_error(NoMethodError)
+  end
+  
+  it "should have categories" do
+    lambda { @vector.categories }.should_not raise_error(NoMethodError)
+  end
+  
 end
 
 describe Vector, ".to_param" do
@@ -47,35 +67,11 @@ describe Vector, ".to_param" do
   include VectorSpecHelper
   
   it "should return id-permalink" do
-    @vector = Vector.new(:id => 1)
+    @vector = Vector.new
     @vector.attributes = valid_vector_attributes
+    @vector.id = 1
     @vector.valid?
     @vector.to_param.should == "#{@vector.id}-#{@vector.permalink}"
   end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

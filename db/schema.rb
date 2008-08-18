@@ -9,7 +9,55 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080815164555) do
+ActiveRecord::Schema.define(:version => 20080818153928) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.string   "permalink"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "categories_vectors", :id => false, :force => true do |t|
+    t.integer "category_id", :limit => 11
+    t.integer "vector_id",   :limit => 11
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "vector_id",  :limit => 11
+    t.string   "user_id"
+    t.text     "body"
+    t.string   "ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "licenses", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "vector_id",        :limit => 11
+    t.integer  "numerical_rating", :limit => 11
+    t.string   "ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "permalink"
+    t.string   "email"
+    t.string   "ip"
+    t.string   "url"
+    t.text     "bio"
+    t.boolean  "admin",      :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "vectors", :force => true do |t|
     t.integer  "user_id",    :limit => 11

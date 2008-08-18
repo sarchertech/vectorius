@@ -1,13 +1,8 @@
-class Vector < ActiveRecord::Base
+class Category < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
-  validates_presence_of :permalink
   
-  belongs_to :user
-  belongs_to :license
-  has_many :comments
-  has_many :ratings
-  has_and_belongs_to_many :categories
+  has_and_belongs_to_many :vectors
   
   def before_validation
 
