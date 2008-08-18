@@ -69,6 +69,15 @@ describe User do
     user.vector_ids.should_not == [1]
   end
   
+  it "should not allow comment_ids to be set with mass assignment" do
+    @comment = Vector.new
+    @comment.id = 1
+    Comment.stub!(:find).and_return([@comment])
+    params = valid_user_attributes.merge({:comment_ids => [1]})
+    user = User.new(params)
+    user.comment_ids.should_not == [1]
+  end
+  
   it "should have vectors" do
     lambda { @user.vectors }.should_not raise_error(NoMethodError)
   end
