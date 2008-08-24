@@ -44,6 +44,28 @@ describe Category do
     lambda { @category.vectors }.should_not raise_error(NoMethodError) 
   end
   
+  it "should have sub_categories" do
+    lambda { @category.sub_categories }.should_not raise_error(NoMethodError) 
+  end
+  
+  it "should have secondary_categories through sub_categories" do
+    lambda { @category.secondary_categories }.should_not raise_error(NoMethodError) 
+  end
+  
+  it "should destroy sub_categories where it is the primary category when destroyed" do
+    @category.sub_categories << sub_category = mock_model(SubCategory, :[]= => true, 
+                                                        :save => true)
+    sub_category.should_receive(:destroy)
+    @category.destroy
+  end
+  
+  it "should destroysub_categories where it is the secondary category when destroyed" do
+    @category.sub_categories2 << sub_category = mock_model(SubCategory, :[]= => true, 
+                                                        :save => true)
+    sub_category.should_receive(:destroy)
+    @category.destroy
+  end
+  
 end 
 
 describe Category, ".to_param" do

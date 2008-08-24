@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  primary_category_id: 1
+  secondary_category_id: 1
+
+two:
+  primary_category_id: 1
+  secondary_category_id: 1
