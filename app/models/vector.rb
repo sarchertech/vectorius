@@ -8,6 +8,7 @@ class Vector < ActiveRecord::Base
   has_many :comments
   has_many :ratings
   has_and_belongs_to_many :categories
+  has_and_belongs_to_many :sub_categories
   
   def before_validation
 

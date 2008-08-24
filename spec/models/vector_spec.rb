@@ -60,6 +60,10 @@ describe Vector do
     lambda { @vector.categories }.should_not raise_error(NoMethodError)
   end
   
+  it "should have sub_categories" do
+    lambda { @vector.sub_categories }.should_not raise_error(NoMethodError)
+  end
+  
 end
 
 describe Vector, ".to_param" do

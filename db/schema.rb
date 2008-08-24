@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080824013732) do
+ActiveRecord::Schema.define(:version => 20080824151644) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -52,6 +52,11 @@ ActiveRecord::Schema.define(:version => 20080824013732) do
     t.integer  "secondary_category_id", :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "sub_categories_vectors", :id => false, :force => true do |t|
+    t.integer "sub_category_id", :limit => 11
+    t.integer "vector_id",       :limit => 11
   end
 
   create_table "users", :force => true do |t|

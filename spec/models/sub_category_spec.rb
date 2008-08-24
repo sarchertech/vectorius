@@ -17,4 +17,8 @@ describe SubCategory do
     lambda { @sub_category.secondary_category }.should_not raise_error(NoMethodError)
   end
   
+  it "should have vectors" do
+    lambda { @sub_category.vectors }.should_not raise_error(NoMethodError)
+  end
+  
 end
