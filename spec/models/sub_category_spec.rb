@@ -22,3 +22,42 @@ describe SubCategory do
   end
   
 end
+
+describe SubCategory, ".sub_category_assigner (class method)" do
+  
+  it "should exist" do
+    SubCategory.should respond_to(:sub_category_assigner)
+  end
+  
+  it "should find or create sub_cats to match combinations and assign to vector" do
+    @cat_id_array = [1, 2]
+    @vector = Vector.create(:name => 'test_vector_name')
+    @sub_cat1 = SubCategory.create(:primary_category_id => 1,
+                                   :secondary_category_id => 2)
+    @sub_cat2 = SubCategory.create(:primary_category_id => 2,
+                                   :secondary_category_id => 1)
+    SubCategory.should_receive(
+      :find_or_create_by_primary_category_id_and_secondary_category_id
+      ).with(1, 2).and_return(@sub_cat1)
+    SubCategory.should_receive(
+      :find_or_create_by_primary_category_id_and_secondary_category_id
+      ).with(2, 1).and_return(@sub_cat2)  
+    SubCategory.sub_category_assigner(@cat_id_array, @vector)
+    @sub_cat1.vectors[0].should == @vector
+    @sub_cat2.vectors[0].should == @vector
+  end
+  
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
