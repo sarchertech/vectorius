@@ -14,10 +14,6 @@ describe CategoriesController, "#route_for" do
     route_for(:controller => "categories", :action => "create").should == "/categories"
   end
   
-  it "should map { :controller => 'categories', :action => 'show', :id => 1 } to /categories/1" do
-    route_for(:controller => "categories", :action => "show", :id => 1).should == "/categories/1"
-  end
-  
   it "should map { :controller => 'categories', :action => 'edit', :id => 1 } to /categories/1/edit" do
     route_for(:controller => "categories", :action => "edit", :id => 1).should == "/categories/1/edit"
   end
@@ -103,6 +99,7 @@ describe CategoriesController, "handling POST /categories" do
   before(:each) do
     @category = mock_model(Category, :to_param => '1', :save => true)
     Category.stub!(:new).and_return(@category)
+    @category.stub!(:save).and_return(true)
     @params = { :name => 'test_category_name' }
     @params_for_mock_category = @params.collect
   end
@@ -111,16 +108,26 @@ describe CategoriesController, "handling POST /categories" do
     post :create, :category => @params
   end
   
-  it "should be successful" do
-    do_create
-    response.should be_success
-  end
-  
   it "should call a new category" do
-    Category.should_receive(:new).with(@params.stringify_keys)
+    Category.should_receive(:new).with(@params.stringify_keys).and_return(@category)
     do_create
   end
   
+  it "should redirect to index if @category.save == true" do
+    @category.should_receive(:save).and_return(true)
+    do_create
+    flash[:notice].should == "Your new category was successfully created."
+    response.should redirect_to(categories_path)
+  end
+
+  it "should render new action + error message of @category.save == false" do
+    @category.should_receive(:save).and_return(false)
+    do_create
+    #can't test flash.now b/c it's gone before the test gets to it.
+    #flash.now[:error].should == "Your new category was not created. Please try again."
+    response.should render_template('new')
+  end
+
 end
 
 
