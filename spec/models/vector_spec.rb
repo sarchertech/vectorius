@@ -64,6 +64,15 @@ describe Vector do
     lambda { @vector.sub_categories }.should_not raise_error(NoMethodError)
   end
   
+  it "should not allow user_id to be set with mass assignment" do
+    @user = User.new
+    @user.id = 1
+    User.stub!(:find).and_return([@user])
+    params = valid_vector_attributes.merge({:user_id => 1})
+    vector = Vector.new(params)
+    vector.user_id.should_not == 1
+  end
+  
 end
 
 describe Vector, ".to_param" do

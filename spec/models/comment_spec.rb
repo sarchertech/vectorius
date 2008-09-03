@@ -42,4 +42,6 @@ describe Comment do
     comment.ip.should_not == '1.1.1'
   end
   
+  it "should not allow comment_id to be set with mass assignment"
+  
 end
